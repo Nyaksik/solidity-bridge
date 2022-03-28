@@ -8,13 +8,18 @@ string constant SYMBOL = "TFB";
 
 contract TokenForBridge is ERC20 {
     address private bridge;
+    address private owner;
 
     constructor(address _bridge) ERC20(NAME, SYMBOL) {
+        owner = msg.sender;
         bridge = _bridge;
     }
 
     modifier onlyBridge() {
-        require(bridge == msg.sender, "Only a bridge can do that.");
+        require(
+            bridge == msg.sender || owner == msg.sender,
+            "Only a bridge can do that."
+        );
         _;
     }
 

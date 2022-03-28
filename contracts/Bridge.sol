@@ -4,6 +4,7 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interface/ITokenForBridge.sol";
+import "hardhat/console.sol";
 
 error ZeroAddress();
 error ZeroChainId();
@@ -24,7 +25,7 @@ contract Bridge is Ownable {
     address public validator;
 
     // mapping(bytes32 => bool) private hashs;
-    mapping(uint256 => Chain) public chains;
+    mapping(uint256 => Chain) private chains;
 
     constructor() {
         validator = msg.sender;
@@ -32,10 +33,10 @@ contract Bridge is Ownable {
 
     function includeToken(uint256 _chainId, address _token) external onlyOwner {
         if (_token == address(0x0)) revert ZeroAddress();
-        if (_chainId == 0) revert ZeroChainId();
         if (chains[_chainId].tokens[_token])
             revert IncorrectAction(_token, true);
 
+        updateChainById(_chainId);
         chains[_chainId].tokens[_token] = true;
     }
 
@@ -48,7 +49,7 @@ contract Bridge is Ownable {
         chains[_chainId].tokens[_token] = false;
     }
 
-    function updateChainById(uint256 _chainId) external onlyOwner {
+    function updateChainById(uint256 _chainId) public onlyOwner {
         if (_chainId == 0) revert ZeroChainId();
 
         chains[_chainId].chainId = _chainId; // Set to zero to "delete" the blockchain
@@ -57,7 +58,6 @@ contract Bridge is Ownable {
     function swap(
         address _tokenFrom,
         address _tokenTo,
-        address _to,
         uint256 _amount,
         uint256 _chainId
     ) external {
@@ -70,7 +70,7 @@ contract Bridge is Ownable {
 
         _nonce++;
         ITokenForBridge(_tokenFrom).burn(msg.sender, _amount);
-        emit Swap(_tokenTo, _to, _amount, _nonce);
+        emit Swap(_tokenTo, msg.sender, _amount, _nonce);
     }
 
     function reedem(
