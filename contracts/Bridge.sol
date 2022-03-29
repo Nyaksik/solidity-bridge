@@ -4,7 +4,6 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interface/ITokenForBridge.sol";
-import "hardhat/console.sol";
 
 error ZeroAddress();
 error ZeroChainId();
@@ -24,7 +23,6 @@ contract Bridge is Ownable {
     uint256 private _nonce;
     address public validator;
 
-    // mapping(bytes32 => bool) private hashs;
     mapping(uint256 => Chain) private chains;
 
     constructor() {

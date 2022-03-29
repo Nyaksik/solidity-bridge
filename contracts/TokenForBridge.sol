@@ -15,7 +15,7 @@ contract TokenForBridge is ERC20 {
         bridge = _bridge;
     }
 
-    modifier onlyBridge() {
+    modifier onlyBridgeOrOwner() {
         require(
             bridge == msg.sender || owner == msg.sender,
             "Only a bridge can do that."
@@ -23,11 +23,11 @@ contract TokenForBridge is ERC20 {
         _;
     }
 
-    function mint(address _account, uint256 _amount) external onlyBridge {
+    function mint(address _account, uint256 _amount) external onlyBridgeOrOwner {
         _mint(_account, _amount);
     }
 
-    function burn(address _account, uint256 _amount) external onlyBridge {
+    function burn(address _account, uint256 _amount) external onlyBridgeOrOwner {
         _burn(_account, _amount);
     }
 }

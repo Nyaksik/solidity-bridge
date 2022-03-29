@@ -1,46 +1,93 @@
-# Advanced Sample Hardhat Project
+# Bridge contract project
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+# Link
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+- __[Link to the bridgeETH](https://rinkeby.etherscan.io/address/0x840B001F3f1246100c1F87FEC1ea793BBBcAD2B7)__ (Rinkeby testnet)
+- __[Link to the tokenERC20](https://rinkeby.etherscan.io/address/0xc463db1df83634731981fb260afdb3768167f1b9)__ (Rinkeby testnet)
+- __[Link to the bridgeBSC](https://testnet.bscscan.com/address/0xa2C7F45044838333e593447734202CaE6a6dDED8)__ (BSC testnet)
+- __[Link to the tokenERC20](https://testnet.bscscan.com/address/0x3cf57c9c0fed223ea5ca72b2eec5a54b6a8e57c2)__ (BSC testnet)
 
-Try running some of the following tasks:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
+# Basic commands
+
+## Use it to compile the contract
+
+```TypeScript
+npx hardhat clean && npx hardhat compile
+// or
+npm run compile
+```
+
+## Use it to deploy the contract locally
+
+- __Deploy bridge contract__
+
+```TypeScript
+npx hardhat run scripts/deploy.ts --network localhost
+// or
+npm run local
+```
+
+- __Deploy tokenERC20__
+
+```TypeScript
+npx hardhat run scripts/deployToken.ts --network localhost
+```
+
+## Use it to deploy the contract in the rinkeby test network
+
+- __Deploy bridge contract__
+
+```TypeScript
+npx hardhat run scripts/deploy.ts --network rinkeby
+// or
+npm run rinkeby
+```
+
+- __Deploy tokenERC20__
+
+```TypeScript
+npx hardhat run scripts/deployToken.ts --network rinkeby
+```
+
+## Use it to test
+
+```TypeScript
 npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
+// or
+npm run test
+```
+
+## Use it to view the test coverage
+
+```TypeScript
 npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+// or
+npm run coverage
 ```
 
-# Etherscan verification
+## Use it to view global options and available tasks
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.ts
+```TypeScript
+npx hardhat help
+// or
+npm run help
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+# Basic task
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+## Swap
+
+**Use to initiate a token swap to another network**
+
+```TypeScript
+npx hardhat swap --token-from [TOKEN_ADDRESS] --token-to [TOKEN_ADDRESS] --amount [AMOUNT_OF_TOKENS] --chain [CHAIN_ID] 
 ```
 
-# Performance optimizations
+## Reedem
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+**Use to initiate a token swap to another network**
+
+```TypeScript
+npx hardhat swap --token-from [TOKEN_ADDRESS] --token-to [TOKEN_ADDRESS] --amount [AMOUNT_OF_TOKENS] --chain [CHAIN_ID] 
+```
