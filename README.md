@@ -86,8 +86,8 @@ npx hardhat swap --token-from [TOKEN_ADDRESS] --token-to [TOKEN_ADDRESS] --amoun
 
 ## Reedem
 
-**Use to initiate a token swap to another network**
+**Use to redeem tokens on the current network**
 
 ```TypeScript
-npx hardhat swap --token-from [TOKEN_ADDRESS] --token-to [TOKEN_ADDRESS] --amount [AMOUNT_OF_TOKENS] --chain [CHAIN_ID] 
+npx hardhat swap --token-from [TOKEN_ADDRESS] --to [WALLET_ADDRESS] --amount [AMOUNT_OF_TOKENS] --nonce [NONCE_NUMBER] 
 ```
